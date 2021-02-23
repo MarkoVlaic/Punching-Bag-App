@@ -1,0 +1,7 @@
+PunchingBag Service
+	uuid: cdf11c5d-62f3-4738-9c7c-7c7833971d2d
+	AccelerationMeasurment characteristic
+		uuid: 3dd9c059-a119-45bc-a777-a288e6eb97be				
+		permissions: notify
+		value: u_int16[3] (x, y, z)
+		CCCD descriptor
