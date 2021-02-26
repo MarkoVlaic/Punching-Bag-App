@@ -1,16 +1,19 @@
 import React, { useEffect, useReducer } from 'react';
 import { Text, StyleSheet, PermissionsAndroid } from 'react-native';
+import { throttle } from 'throttle-debounce';
 
 import Card from '../shared/Card';
-import DeviceList from './DeviceList';
+import Content from './Content';
 import ButtonPrimary from '../shared/ButtonPrimary';
 import { colorPrimary, colorGreyMedium } from '../shared/constants';
 import { useBleManager } from '../shared/bleManager';
+import { PUNCHING_BAG_SERVICE } from '../shared/uuids';
 
 import {
   reducer,
   SET_PERMISSION,
   SET_ADAPTER,
+  ADD_DEVICE,
   ADAPTER_ON,
   ADAPTER_OFF,
 } from './reducer';
@@ -38,9 +41,8 @@ const styles = StyleSheet.create({
 const BagControl = () => {
   const bleManager = useBleManager();
 
-  const initAdapterState = bleManager.state === 'PoweredOn' ? ADAPTER_ON : ADAPTER_OFF;
   const initialState = {
-    adapter: initAdapterState,
+    adapter: ADAPTER_OFF,
     connected: false,
     devices: [],
     permissionGranted: false,
@@ -72,10 +74,22 @@ const BagControl = () => {
     requestPermissions();
   }, []);
 
+  const interpretAdapterState = (adapterState) => (adapterState === 'PoweredOn' ? ADAPTER_ON : ADAPTER_OFF);
+
+  useEffect(() => {
+    // Initialize the bluetooth adapter state
+    const init = async () => {
+      const adapterState = await bleManager.state();
+      const payload = interpretAdapterState(adapterState);
+      dispatch({ type: SET_ADAPTER, payload });
+    };
+    init();
+  }, [bleManager]);
+
   useEffect(() => {
     // Track the bluetooth adapter state
     const subscription = bleManager.onStateChange((adapterState) => {
-      const payload = adapterState === 'PoweredOn' ? ADAPTER_ON : ADAPTER_OFF;
+      const payload = interpretAdapterState(adapterState);
       dispatch({ type: SET_ADAPTER, payload });
     });
 
@@ -84,21 +98,33 @@ const BagControl = () => {
     };
   });
 
-  const devices = [
-    { id: 1, name: 'Heavy Bag' },
-    { id: 2, name: 'Speed Bag' },
-    { id: 3, name: 'Regular Bag' },
-    { id: 4, name: 'Supernatural bag' },
-  ];
+  useEffect(() => {
+    // Scan devices
+    const onDeviceScan = (error, device) => {
+      // TODO: Handle this better
+      if (error) console.error(error);
+      dispatch({ type: ADD_DEVICE, payload: device });
+    };
 
-  const disabled = !state.permissionGranted || (state.adapter === ADAPTER_OFF);
+    if (state.permissionGranted && state.adapter === ADAPTER_ON) {
+      bleManager.startDeviceScan(
+        [PUNCHING_BAG_SERVICE],
+        { allowDuplicates: false },
+        throttle(500, onDeviceScan),
+      );
+    } else {
+      bleManager.stopDeviceScan();
+    }
+  }, [state.adapter, state.permissionGranted, bleManager]);
+
+  const disabled = !state.permissionGranted || (state.adapter === ADAPTER_OFF) || (state.devices.length === 0);
 
   let connectTextStyle = styles.connectText;
   if (disabled) connectTextStyle = { ...connectTextStyle, ...styles.connectTextDisabled };
 
   return (
     <Card title="BAG" style={styles.card}>
-      <DeviceList devices={devices} />
+      <Content state={state} />
       <ButtonPrimary style={styles.connectButton} disabled={disabled}>
         <Text style={connectTextStyle}>CONNECT</Text>
       </ButtonPrimary>

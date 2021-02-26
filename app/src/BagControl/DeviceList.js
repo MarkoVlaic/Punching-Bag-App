@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   emptyText: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Lato-Light',
     fontSize: 18,
     textTransform: 'capitalize',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: colorPrimary,
   },
 });
@@ -55,7 +55,7 @@ Item.defaultProps = {
 };
 
 const EmptyList = () => (
-  <Text style={styles.emptyText}>No bags found!</Text>
+  <Text style={styles.emptyText}>Searching for bags</Text>
 );
 
 const DeviceList = ({ devices }) => {
@@ -69,7 +69,7 @@ const DeviceList = ({ devices }) => {
   };
 
   const renderItem = ({ item }) => (
-    <Item selected={item.id === selected} name={item.name} onPress={() => selectDevice(item)} />
+    <Item selected={item.id === selected} name={item.localName} onPress={() => selectDevice(item)} />
   );
 
   return (
