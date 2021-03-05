@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, StyleSheet, ViewPropTypes } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ViewPropTypes,
+} from 'react-native';
 
 import { colorGreyDark, colorWhite } from './constants';
 

@@ -1,18 +1,11 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 
 import BagControl from './BagControl/index';
 import { colorGreyLight } from './shared/constants';
 import { BleManagerProvider } from './shared/bleManager';
+import { CurrentBagProvider } from './shared/currentBag';
 
 const appStyle = {
   backgroundColor: colorGreyLight,
@@ -23,12 +16,18 @@ const appStyle = {
 
 const bleManager = new BleManager();
 
-const App = () => (
-  <View style={appStyle}>
-    <BleManagerProvider value={bleManager}>
-      <BagControl />
-    </BleManagerProvider>
-  </View>
-);
+const App = () => {
+  const [currentBag, setCurrentBag] = useState(null);
+
+  return (
+    <View style={appStyle}>
+      <BleManagerProvider value={bleManager}>
+        <CurrentBagProvider value={[currentBag, setCurrentBag]}>
+          <BagControl />
+        </CurrentBagProvider>
+      </BleManagerProvider>
+    </View>
+  );
+};
 
 export default App;

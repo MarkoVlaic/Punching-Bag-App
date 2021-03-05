@@ -2,8 +2,14 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  FlatList,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
+import { SET_SELECTED } from './reducer';
 import { colorGreyDark, colorPrimary } from '../shared/constants';
 
 const styles = StyleSheet.create({
@@ -58,13 +64,14 @@ const EmptyList = () => (
   <Text style={styles.emptyText}>Searching for bags</Text>
 );
 
-const DeviceList = ({ devices }) => {
-  const firstDeviceId = devices[0] ? devices[0].id : null;
-  const [selected, setSelected] = useState(firstDeviceId);
+const DeviceList = ({ devices, dispatch }) => {
+  // const firstDeviceId = devices[0] ? devices[0].id : null;
+  const [selected, setSelected] = useState(null);
   const listRef = useRef();
 
   const selectDevice = (item) => {
     setSelected(item.id);
+    dispatch({ type: SET_SELECTED, payload: item.id });
     listRef.current.scrollToItem({ item, viewPosition: 0.5 });
   };
 

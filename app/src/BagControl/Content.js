@@ -2,9 +2,12 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { ADAPTER_ON, ADAPTER_OFF } from './reducer';
+import { ADAPTER_OFF, CONNECTED } from './reducer';
 import DeviceList from './DeviceList';
 import { colorGreyDark, colorPrimary } from '../shared/constants';
+import { useCurrentBag } from '../shared/currentBag';
+
+import { initialState, StatePropTypes } from './state';
 
 const styles = StyleSheet.create({
   infoText: {
@@ -16,23 +19,36 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 3,
   },
+  connectedText: {
+    fontFamily: 'Lato-Bold',
+    fontSize: 18,
+    borderBottomWidth: 2,
+    borderBottomColor: colorPrimary,
+  },
 });
 
-const Content = ({ state }) => {
-  const { adapter, devices, permissionGranted } = state;
+const Content = ({ state, dispatch }) => {
+  const {
+    adapter,
+    devices,
+    permissionGranted,
+    connection,
+  } = state;
+  const [currentBag] = useCurrentBag();
 
   if (!permissionGranted) return <Text style={styles.infoText}>Enable location permission in order to use bluetooth!</Text>;
   if (adapter === ADAPTER_OFF) return <Text style={styles.infoText}>Turn bluetooth on to connect to the bag!</Text>;
-  return <DeviceList devices={devices} />;
+  if (connection === CONNECTED) return <Text style={styles.connectedText}>{currentBag.name}</Text>;
+  return <DeviceList devices={devices} dispatch={dispatch} />;
 };
 
 Content.propTypes = {
-  state: PropTypes.shape({
-    adapter: PropTypes.oneOf([ADAPTER_ON, ADAPTER_OFF]),
-    connected: PropTypes.bool,
-    devices: PropTypes.arrayOf(PropTypes.object),
-    permissionGranted: PropTypes.bool,
-  }).isRequired,
+  state: StatePropTypes,
+  dispatch: PropTypes.func.isRequired,
+};
+
+Content.defaultProps = {
+  state: initialState,
 };
 
 export default Content;
