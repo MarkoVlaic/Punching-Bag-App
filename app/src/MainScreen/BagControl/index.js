@@ -2,11 +2,11 @@ import React, { useEffect, useReducer } from 'react';
 import { StyleSheet, PermissionsAndroid } from 'react-native';
 import { throttle } from 'throttle-debounce';
 
-import Card from '../shared/Card';
+import Card from '../../shared/Card';
 import Content from './Content';
 import ActionButton from './ActionButton';
-import { useBleManager } from '../shared/bleManager';
-import { PUNCHING_BAG_SERVICE } from '../shared/uuids';
+import { useBleManager } from '../../shared/bleManager';
+import { PUNCHING_BAG_SERVICE } from '../../shared/uuids';
 import { initialState } from './state';
 
 import {

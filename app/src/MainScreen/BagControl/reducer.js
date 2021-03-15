@@ -25,8 +25,11 @@ export const reducer = (state, action) => {
     }
     case SET_SELECTED:
       return { ...state, selected: action.payload };
-    case SET_CONNECTION:
-      return { ...state, connection: action.payload };
+    case SET_CONNECTION: {
+      let { devices } = state;
+      if (action.payload === DISCONNECTED) devices = [];
+      return { ...state, connection: action.payload, devices };
+    }
     default:
       return state;
   }

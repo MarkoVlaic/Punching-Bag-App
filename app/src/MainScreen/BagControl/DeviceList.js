@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { SET_SELECTED } from './reducer';
-import { colorGreyDark, colorPrimary } from '../shared/constants';
+import { colorGreyDark, colorPrimary } from '../../shared/constants';
 
 const styles = StyleSheet.create({
   item: {

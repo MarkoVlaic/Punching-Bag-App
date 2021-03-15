@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { ADAPTER_OFF, CONNECTED } from './reducer';
 import DeviceList from './DeviceList';
-import { colorGreyDark, colorPrimary } from '../shared/constants';
-import { useCurrentBag } from '../shared/currentBag';
+import { colorGreyDark, colorPrimary } from '../../shared/constants';
+import { useCurrentBag } from '../../shared/currentBag';
 
 import { initialState, StatePropTypes } from './state';
 

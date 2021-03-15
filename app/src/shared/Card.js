@@ -37,11 +37,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const Card = ({ title, style, children }) => {
+const Card = ({ title, style, children, containerStyle }) => {
   const contentStyle = { ...styles.content, ...style };
+  const appliedContainerStyle = { ...styles.container, ...containerStyle };
 
   return (
-    <View style={styles.container}>
+    <View style={appliedContainerStyle}>
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
       </View>
@@ -56,12 +57,14 @@ Card.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
   style: ViewPropTypes.style,
+  containerStyle: ViewPropTypes.style,
 };
 
 Card.defaultProps = {
   title: '',
   children: (<></>),
   style: {},
+  containerStyle: {},
 };
 
 export default Card;

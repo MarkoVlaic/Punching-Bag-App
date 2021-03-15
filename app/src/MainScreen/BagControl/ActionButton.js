@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 
-import ButtonPrimary from '../shared/ButtonPrimary';
+import ButtonPrimary from '../../shared/ButtonPrimary';
 import {
   ADAPTER_OFF,
   ADAPTER_ON,
@@ -11,9 +11,9 @@ import {
   CONNECTING,
   DISCONNECTED,
 } from './reducer';
-import { colorPrimary, colorGreyMedium } from '../shared/constants';
-import { useBleManager } from '../shared/bleManager';
-import { useCurrentBag } from '../shared/currentBag';
+import { colorPrimary, colorGreyMedium } from '../../shared/constants';
+import { useBleManager } from '../../shared/bleManager';
+import { useCurrentBag } from '../../shared/currentBag';
 
 import { initialState, StatePropTypes } from './state';
 
