@@ -4,5 +4,6 @@ module.exports = {
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     'max-len': 0,
+    "react/prop-types": 0,
   },
 };

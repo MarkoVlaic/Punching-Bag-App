@@ -34,6 +34,7 @@ const App = () => {
               options={{
                 headerStyle: {
                   backgroundColor: colorGreyDark,
+                  height: 35,
                 },
                 headerTintColor: colorWhite,
               }}

@@ -1,54 +1,35 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React, { useLayoutEffect, useReducer } from 'react';
+import { Text } from 'react-native';
+import { HeaderBackButton } from '@react-navigation/stack';
 
-import { colorWhite } from '../shared/constants';
-
-const styles = StyleSheet.create({
-  timeText: {
-    fontFamily: 'Lato-Regular',
-    fontSize: 22,
-    color: colorWhite,
-    marginRight: 10,
-  },
-});
-
-const TimeDisplay = ({ time }) => {
-  const seconds = time % 60;
-  const minutes = Math.floor(time / 60);
-
-  const padLeft = (t) => {
-    const res = t < 10 ? `0${t}` : `${t}`;
-    return res;
-  };
-
-  const display = `${padLeft(minutes)}:${padLeft(seconds)}`;
-
-  return (
-    <Text style={styles.timeText}>
-      {display}
-    </Text>
-  );
-};
+import TimeDisplay from './TimeDisplay';
+import EndButton from './EndButton';
+import { reducer, initialState, SET_ENDED } from './reducer';
 
 const SessionScreen = ({ navigation }) => {
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [sessionState, dispatch] = useReducer(reducer, initialState);
 
   useLayoutEffect(() => {
+    const onEndPress = () => {
+      dispatch({ type: SET_ENDED, payload: true });
+    };
+
+    const { ended } = sessionState;
+
     navigation.setOptions({
       headerRight: () => (
-        <TimeDisplay time={elapsedTime} />
+        <TimeDisplay ended={ended} />
       ),
+      headerLeft: (props) => {
+        // Documentation suggests we spread the props this way so it is ok to disable the lint
+        // https://reactnavigation.org/docs/stack-navigator#headerleft
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        if (ended) return <HeaderBackButton {...props} onPress={() => navigation.goBack()} />;
+        return <EndButton onPress={onEndPress} />;
+      },
       headerTitle: '',
     });
-  }, [navigation, elapsedTime]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setElapsedTime((t) => t + 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  });
+  }, [navigation, sessionState]);
 
   return (
     <>
