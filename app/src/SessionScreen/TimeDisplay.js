@@ -12,12 +12,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const TimeDisplay = ({ ended }) => {
+const TimeDisplay = ({ startTimestamp, ended }) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime((t) => t + 1);
+      const curTime = Math.round((Date.now() - startTimestamp) / 1000);
+      setTime(curTime);
     }, 1000);
 
     if (ended) clearInterval(interval);
@@ -25,7 +26,7 @@ const TimeDisplay = ({ ended }) => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [ended]);
+  }, [ended, startTimestamp]);
 
   const seconds = time % 60;
   const minutes = Math.floor(time / 60);

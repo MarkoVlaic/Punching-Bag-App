@@ -9,6 +9,7 @@ const style = {
   backgroundColor: colorGreyLight,
   width: '100%',
   height: '100%',
+  justifyContent: 'flex-start',
   alignItems: 'center',
 };
 

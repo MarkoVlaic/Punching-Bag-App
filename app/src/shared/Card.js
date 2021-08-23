@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 7,
     marginTop: 10,
+    elevation: 2,
   },
   header: {
     width: '100%',
