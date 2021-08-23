@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
 import StatDisplay from './StatDisplay';
 
-import {initialState, reducer, HANDLE_PUNCH} from './reducer';
+import { initialState, reducer, HANDLE_PUNCH } from './reducer';
 
-const Stats = ({punches}) => {
+const Stats = ({ punches }) => {
   const [statState, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {

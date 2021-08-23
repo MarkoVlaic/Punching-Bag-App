@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet } from 'react-native';
 
 import { colorWhite } from '../shared/constants';
+import { wp } from '../shared/responsiveLayout';
 
 const styles = StyleSheet.create({
   text: {
     fontFamily: 'Lato-Regular',
-    fontSize: 22,
+    fontSize: wp(22),
     color: colorWhite,
-    marginRight: 10,
+    marginRight: wp(10),
   },
 });
 

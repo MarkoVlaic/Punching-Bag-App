@@ -14,19 +14,20 @@ import {
 import { colorPrimary, colorGreyMedium } from '../../shared/constants';
 import { useBleManager } from '../../shared/bleManager';
 import { useCurrentBag } from '../../shared/currentBag';
+import { wp, hp } from '../../shared/responsiveLayout'; 
 
 import { initialState, StatePropTypes } from './state';
 
 const styles = StyleSheet.create({
   button: {
     width: '70%',
-    height: 35,
-    marginTop: 15,
+    height: hp(35),
+    marginTop: hp(15),
   },
   text: {
     fontFamily: 'Lato-Regular',
-    fontSize: 18,
-    letterSpacing: 2,
+    fontSize: wp(18),
+    letterSpacing: wp(2),
     color: colorPrimary,
   },
   textDisabled: {

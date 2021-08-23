@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { colorPrimary } from '../shared/constants';
+import { colorPrimary } from '../../shared/constants';
+import { wp } from '../../shared/responsiveLayout';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,11 +10,11 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: 'Lato-Regular',
-    fontSize: 14,
+    fontSize: wp(14),
   },
   value: {
     fontFamily: 'Lato-Bold',
-    fontSize: 16,
+    fontSize: wp(16),
     color: colorPrimary,
   },
 });

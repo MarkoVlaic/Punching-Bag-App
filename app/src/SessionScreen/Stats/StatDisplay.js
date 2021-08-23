@@ -3,19 +3,21 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import Card from '../../shared/Card';
-import LabeledStat from '../LabeledStat';
+import LabeledStat from './LabeledStat';
+
+import { wp } from '../../shared/responsiveLayout';
 
 const styles = StyleSheet.create({
   container: {
-    marginRight: 20,
-    marginLeft: 20,
+    marginRight: wp(20),
+    marginLeft: wp(20),
     justifyContent: 'center',
   },
   cardContent: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    padding: 20,
+    padding: wp(20),
   },
 });
 

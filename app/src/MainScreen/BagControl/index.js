@@ -7,6 +7,7 @@ import Content from './Content';
 import ActionButton from './ActionButton';
 import { useBleManager } from '../../shared/bleManager';
 import { PUNCHING_BAG_SERVICE } from '../../shared/uuids';
+import { wp } from '../../shared/responsiveLayout';
 import { initialState } from './state';
 
 import {
@@ -20,7 +21,7 @@ import {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 15,
+    padding: wp(15),
   },
 });
 

@@ -8,12 +8,14 @@ import {
   VictoryZoomContainer,
 } from 'victory-native';
 
-import { colorPrimary, colorGreyMedium } from '../shared/constants';
+import { colorPrimary, colorGreyMedium, colorWhite } from '../shared/constants';
+import { wp } from '../shared/responsiveLayout';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const axisStyle = {
-  axisLabel: { fontFamily: 'Lato-Regular', fontSize: 14, padding: 30 },
+  axisLabel: { fontFamily: 'Lato-Regular', fontSize: wp(14), padding: wp(30) },
   axis: { stroke: colorGreyMedium },
-  tickLabels: { fontSize: 12 },
+  tickLabels: { fontSize: wp(12) },
   ticks: { stroke: colorPrimary, size: 5 },
 };
 
@@ -44,7 +46,7 @@ const Chart = ({ punches, timeDomainRange }) => {
   const getData = () => punches.filter((punch) => punch.timestamp >= timeDomain[0] && punch.timestamp <= timeDomain[1]);
 
   return (
-    <View>
+    <View style={{margin: widthPercentageToDP('5%')}}>
       <VictoryChart
         domain={getEntireDomain()}
         // animate={{ dutaion: 200 }}

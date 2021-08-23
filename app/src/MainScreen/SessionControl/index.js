@@ -6,16 +6,17 @@ import Card from '../../shared/Card';
 import ButtonPrimary from '../../shared/ButtonPrimary';
 import { colorPrimary, colorGreyMedium } from '../../shared/constants';
 import { useCurrentBag } from '../../shared/currentBag';
+import { hp, wp } from '../../shared/responsiveLayout';
 
 const styles = StyleSheet.create({
   button: {
     width: '70%',
-    height: 35,
+    height: hp(35),
   },
   text: {
     fontFamily: 'Lato-Regular',
-    fontSize: 18,
-    letterSpacing: 2,
+    fontSize: wp(18),
+    letterSpacing: wp(2),
     color: colorPrimary,
   },
   textDisabled: {
@@ -36,7 +37,7 @@ const SessionControl = () => {
   };
 
   return (
-    <Card title="SESSION" style={{ padding: 15 }}>
+    <Card title="SESSION" style={{ padding: wp(15) }}>
       <ButtonPrimary style={styles.button} disabled={disabled} onPress={startSession}>
         <Text style={textStyle}>NEW SESSION</Text>
       </ButtonPrimary>

@@ -6,22 +6,23 @@ import { ADAPTER_OFF, CONNECTED } from './reducer';
 import DeviceList from './DeviceList';
 import { colorGreyDark, colorPrimary } from '../../shared/constants';
 import { useCurrentBag } from '../../shared/currentBag';
+import { wp } from '../../shared/responsiveLayout';
 
 import { initialState, StatePropTypes } from './state';
 
 const styles = StyleSheet.create({
   infoText: {
     fontFamily: 'Lato-Light',
-    fontSize: 18,
+    fontSize: wp(18),
     color: colorGreyDark,
     textAlign: 'center',
     borderBottomColor: colorPrimary,
     borderBottomWidth: 1,
-    paddingBottom: 3,
+    paddingBottom: wp(3),
   },
   connectedText: {
     fontFamily: 'Lato-Bold',
-    fontSize: 18,
+    fontSize: wp(18),
     borderBottomWidth: 2,
     borderBottomColor: colorPrimary,
   },

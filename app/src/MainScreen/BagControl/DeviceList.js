@@ -11,28 +11,29 @@ import {
 
 import { SET_SELECTED } from './reducer';
 import { colorGreyDark, colorPrimary } from '../../shared/constants';
+import { wp } from '../../shared/responsiveLayout';
 
 const styles = StyleSheet.create({
   item: {
     fontFamily: 'Lato-Regular',
-    fontSize: 16,
+    fontSize: wp(16),
     textTransform: 'capitalize',
     color: colorGreyDark,
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: wp(5),
+    marginRight: wp(5),
   },
   itemSelected: {
     fontFamily: 'Lato-Bold',
-    fontSize: 18,
+    fontSize: wp(18),
     borderBottomWidth: 2,
     borderBottomColor: colorPrimary,
   },
   listStyle: {
-    padding: 5,
+    padding: wp(5),
   },
   emptyText: {
     fontFamily: 'Lato-Light',
-    fontSize: 18,
+    fontSize: wp(18),
     textTransform: 'capitalize',
     borderBottomWidth: 1,
     borderBottomColor: colorPrimary,

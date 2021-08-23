@@ -9,6 +9,7 @@ import SessionScreen from './SessionScreen';
 import { BleManagerProvider } from './shared/bleManager';
 import { CurrentBagProvider } from './shared/currentBag';
 import { colorGreyDark, colorWhite } from './shared/constants';
+import { hp } from './shared/responsiveLayout';
 
 const bleManager = new BleManager();
 
@@ -34,7 +35,7 @@ const App = () => {
               options={{
                 headerStyle: {
                   backgroundColor: colorGreyDark,
-                  height: 35,
+                  height: hp(35),
                 },
                 headerTintColor: colorWhite,
               }}
