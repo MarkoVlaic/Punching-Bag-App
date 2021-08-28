@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useReducer, useEffect } from 'react';
+import React, { useLayoutEffect, useReducer, useEffect, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/stack';
 
@@ -14,6 +14,7 @@ import {
   SET_START_TIMESTAMP,
 } from './reducer';
 
+import SessionStore from './SessionStore';
 import { colorWhite } from '../shared/constants';
 
 const styles = StyleSheet.create({
@@ -33,12 +34,22 @@ const SessionScreen = ({ navigation }) => {
     dispatch({ type: SET_START_TIMESTAMP, payload: Date.now() });
   }, []);
 
+  // Init the session store
+  const sessionStoreRef = useRef();
   useLayoutEffect(() => {
+    sessionStoreRef.current = new SessionStore(Date.now());
+  }, []);
+
+  useLayoutEffect(() => {
+    const { ended, startTimestamp } = sessionState;
+
     const onEndPress = () => {
       dispatch({ type: SET_ENDED, payload: true });
-    };
 
-    const { ended, startTimestamp } = sessionState;
+      const duration = Date.now() - startTimestamp;
+      sessionStoreRef.current.setItem('duration', duration);
+      sessionStoreRef.current.write();
+    };
 
     navigation.setOptions({
       headerRight: () => (
@@ -72,10 +83,14 @@ const SessionScreen = ({ navigation }) => {
     };
   });
 
+  useEffect(() => {
+    sessionStoreRef.current.setItem('punches', punches);
+  }, [punches]);
+
   return (
     <View style={styles.container}>
       <Chart punches={punches} timeDomainRange={30} />
-      <Stats punches={punches} startTimestamp={startTimestamp} />
+      <Stats punches={punches} sessionStoreRef={sessionStoreRef} />
     </View>
   );
 };

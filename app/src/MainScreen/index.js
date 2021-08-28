@@ -3,6 +3,7 @@ import { View } from 'react-native';
 
 import BagControl from './BagControl';
 import SessionControl from './SessionControl';
+import HistoryCard from './HistoryCard';
 import { colorGreyLight } from '../shared/constants';
 
 const style = {
@@ -17,6 +18,7 @@ const MainScreen = () => (
   <View style={style}>
     <BagControl />
     <SessionControl />
+    <HistoryCard />
   </View>
 );
 

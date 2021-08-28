@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { BleManager } from 'react-native-ble-plx';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,12 +10,16 @@ import { BleManagerProvider } from './shared/bleManager';
 import { CurrentBagProvider } from './shared/currentBag';
 import { colorGreyDark, colorWhite } from './shared/constants';
 import { hp } from './shared/responsiveLayout';
+import useMockSessionsInMemory from './shared/mocks/mockSessionsInMemory';
 
 const bleManager = new BleManager();
 
 const App = () => {
+  // Stores the current bag device
   const [currentBag, setCurrentBag] = useState(null);
   const Stack = createStackNavigator();
+
+  //useMockSessionsInMemory(0);
 
   return (
     <BleManagerProvider value={bleManager}>

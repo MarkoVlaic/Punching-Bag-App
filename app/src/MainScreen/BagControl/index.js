@@ -22,6 +22,7 @@ import {
 const styles = StyleSheet.create({
   card: {
     padding: wp(15),
+    
   },
 });
 
@@ -81,7 +82,7 @@ const BagControl = () => {
     // Scan devices
     const onDeviceScan = (error, device) => {
       // TODO: Handle this better
-      if (error) console.error(error);
+      if (error) return console.warn(error);
       dispatch({ type: ADD_DEVICE, payload: device });
     };
 

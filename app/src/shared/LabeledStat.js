@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { colorPrimary } from '../../shared/constants';
-import { wp } from '../../shared/responsiveLayout';
+import { colorPrimary } from './constants';
+import { wp } from './responsiveLayout';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,11 +19,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const LabeledStat = ({ name, value }) => (
-  <View style={styles.container}>
-    <Text style={styles.name}>{name}</Text>
-    <Text style={styles.value}>{value}</Text>
-  </View>
-);
+const LabeledStat = ({ name, value, style }) => {
+  const appliedStyle = { ...styles.container, ...style };
+
+  return (
+    <View style={appliedStyle}>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.value}>{value}</Text>
+    </View>
+  );
+};
 
 export default LabeledStat;

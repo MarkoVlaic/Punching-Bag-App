@@ -3,7 +3,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import Card from '../../shared/Card';
-import LabeledStat from './LabeledStat';
+import LabeledStat from '../../shared/LabeledStat';
 
 import { wp } from '../../shared/responsiveLayout';
 

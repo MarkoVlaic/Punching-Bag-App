@@ -3,8 +3,14 @@ import StatDisplay from './StatDisplay';
 
 import { initialState, reducer, HANDLE_PUNCH } from './reducer';
 
-const Stats = ({ punches }) => {
+const Stats = ({ punches, sessionStoreRef }) => {
   const [statState, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (sessionStoreRef.current) {
+      sessionStoreRef.current.setItem('stats', statState);
+    }
+  }, [statState, sessionStoreRef]);
 
   useEffect(() => {
     if (!punches || !punches.length) return;
