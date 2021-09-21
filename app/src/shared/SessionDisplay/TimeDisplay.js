@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-import { colorWhite } from '../shared/constants';
-import { wp } from '../shared/responsiveLayout';
+import { colorWhite } from '../constants';
+import { wp } from '../responsiveLayout';
 
 const styles = StyleSheet.create({
   text: {
@@ -13,23 +13,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const TimeDisplay = ({ startTimestamp, ended }) => {
-  const [time, setTime] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const curTime = Math.round((Date.now() - startTimestamp) / 1000);
-      setTime(curTime);
-    }, 1000);
-
-    if (ended) clearInterval(interval);
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [ended, startTimestamp]);
-
-  const seconds = time % 60;
+const TimeDisplay = ({ time }) => {
+  const seconds = Math.round(time % 60);
   const minutes = Math.floor(time / 60);
 
   const padLeft = (t) => {

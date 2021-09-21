@@ -6,11 +6,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import MainScreen from './MainScreen';
 import SessionScreen from './SessionScreen';
+import HistoryEntryScreen from './HistoryEntryScreen';
 import { BleManagerProvider } from './shared/bleManager';
 import { CurrentBagProvider } from './shared/currentBag';
 import { colorGreyDark, colorWhite } from './shared/constants';
 import { hp } from './shared/responsiveLayout';
 import useMockSessionsInMemory from './shared/mocks/mockSessionsInMemory';
+import HistoryCard from './MainScreen/HistoryCard';
 
 const bleManager = new BleManager();
 
@@ -36,6 +38,17 @@ const App = () => {
             <Stack.Screen
               name="Session"
               component={SessionScreen}
+              options={{
+                headerStyle: {
+                  backgroundColor: colorGreyDark,
+                  height: hp(35),
+                },
+                headerTintColor: colorWhite,
+              }}
+            />
+            <Stack.Screen
+              name="HistoryEntry"
+              component={HistoryEntryScreen}
               options={{
                 headerStyle: {
                   backgroundColor: colorGreyDark,

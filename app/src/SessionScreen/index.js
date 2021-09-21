@@ -1,11 +1,11 @@
-import React, { useLayoutEffect, useReducer, useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useReducer, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/stack';
 
-import TimeDisplay from './TimeDisplay';
+import TimeDisplay from '../shared/SessionDisplay/TimeDisplay';
 import EndButton from './EndButton';
-import Chart from './Chart';
-import Stats from './Stats';
+import SessionDisplay from '../shared/SessionDisplay';
+
 import {
   reducer,
   initialState,
@@ -15,17 +15,25 @@ import {
 } from './reducer';
 
 import SessionStore from './SessionStore';
-import { colorWhite } from '../shared/constants';
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    width: '100%',
-    height: '100%',
-    backgroundColor: colorWhite,
-  },
-});
+const TickingTimeDisplay = ({ startTimestamp, ended }) => {
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const curTime = Math.round((Date.now() - startTimestamp) / 1000);
+      setTime(curTime);
+    }, 1000);
+
+    if (ended) clearInterval(interval);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [ended, startTimestamp]);
+
+  return <TimeDisplay time={time} />;
+};
 
 const SessionScreen = ({ navigation }) => {
   const [sessionState, dispatch] = useReducer(reducer, initialState);
@@ -53,7 +61,7 @@ const SessionScreen = ({ navigation }) => {
 
     navigation.setOptions({
       headerRight: () => (
-        <TimeDisplay startTimestamp={startTimestamp} ended={ended} />
+        <TickingTimeDisplay startTimestamp={startTimestamp} ended={ended} />
       ),
       headerLeft: (props) => {
         // Documentation suggests we spread the props this way so it is ok to disable the lint
@@ -66,7 +74,7 @@ const SessionScreen = ({ navigation }) => {
     });
   }, [navigation, sessionState]);
 
-  const { ended, punches, startTimestamp } = sessionState;
+  const { ended, punches, startTimestamp, stats } = sessionState;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -85,14 +93,10 @@ const SessionScreen = ({ navigation }) => {
 
   useEffect(() => {
     sessionStoreRef.current.setItem('punches', punches);
-  }, [punches]);
+    sessionStoreRef.current.setItem('stats', stats);
+  }, [punches, stats]);
 
-  return (
-    <View style={styles.container}>
-      <Chart punches={punches} timeDomainRange={30} />
-      <Stats punches={punches} sessionStoreRef={sessionStoreRef} />
-    </View>
-  );
+  return <SessionDisplay punches={punches} stats={stats} />;
 };
 
 export default SessionScreen;

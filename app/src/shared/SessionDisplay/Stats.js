@@ -2,10 +2,10 @@ import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import Card from '../../shared/Card';
-import LabeledStat from '../../shared/LabeledStat';
+import Card from '../Card';
+import LabeledStat from '../LabeledStat';
 
-import { wp } from '../../shared/responsiveLayout';
+import { wp } from '../responsiveLayout';
 
 const styles = StyleSheet.create({
   container: {

@@ -66,7 +66,7 @@ const EmptyList = () => (
 );
 
 const DeviceList = ({ devices, dispatch }) => {
-  console.log(devices);
+  //console.log(devices);
   // const firstDeviceId = devices[0] ? devices[0].id : null;
   const [selected, setSelected] = useState(null);
   const listRef = useRef();

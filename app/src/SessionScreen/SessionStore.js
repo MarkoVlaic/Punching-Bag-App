@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // A module that keeps track of the session data and writes it to memory
 export default class SessionStore {
   constructor(timestamp) {
-    console.log('created a store with timestamp', timestamp);
+    // console.log('created a store with timestamp', timestamp);
     this.timestamp = timestamp;
     this.data = {};
   }
@@ -23,14 +23,14 @@ export default class SessionStore {
   async write() {
     // Retrieve the array of all stored session timestamps and append the one we are saving
     const sessionsString = await AsyncStorage.getItem('@sessions');
-    console.log('string', sessionsString);
+    // console.log('string', sessionsString);
     let sessions = JSON.parse(sessionsString);
-    console.log('parsed', sessions);
+    // console.log('parsed', sessions);
     if (!sessions) {
       sessions = [];
     }
     sessions.push(this.timestamp);
-    console.log('saving sessions', sessions);
+    // console.log('saving sessions', sessions);
     const dataString = JSON.stringify(this.data);
 
     await AsyncStorage.setItem('@sessions', JSON.stringify(sessions));

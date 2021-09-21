@@ -47,7 +47,7 @@ const HistoryCard = () => {
   const loadSessionsInRange = async (start, end) => {
     const sessionPromises = sessionTimestamps.slice(start, end).map((timestamp) => AsyncStorage.getItem(`${timestamp}`));
     const sessions = await Promise.all(sessionPromises);
-    console.log('more sessions', sessions);
+    //console.log('more sessions', sessions);
 
     return sessions.map((session) => JSON.parse(session));
   };
@@ -61,17 +61,17 @@ const HistoryCard = () => {
     const loadSessionTimestamps = async () => {
       try {
         const keys = await AsyncStorage.getAllKeys();
-        console.log('keys', keys);
+        // console.log('keys', keys);
         const sessionTimestampsString = await AsyncStorage.getItem('@sessions');
         let parsedSessionTimestamps = JSON.parse(sessionTimestampsString);
         if (parsedSessionTimestamps === null) parsedSessionTimestamps = [];
         parsedSessionTimestamps.reverse(); // We have to reverse the array so the latest sessions get to the top
         setSessionTimestamps(parsedSessionTimestamps);
 
-        console.log('tmsptm', parsedSessionTimestamps);
+        // console.log('tmsptm', parsedSessionTimestamps);
 
         const initialData = await loadSessionsInRange(0, ITEMS_PER_PAGE);
-        console.log('initial', initialData);
+        // console.log('initial', initialData);
         setLoadedData(initialData);
         setRefreshData(false);
       } catch (e) {
@@ -112,15 +112,16 @@ const HistoryCard = () => {
     setLoading(false);
   };
 
-  console.log('ldd', loadedData);
+  // console.log('ldd', loadedData);
   const displayData = loadedData.map((session, index) => ({
     timestamp: +sessionTimestamps[index], // The + here serves to convert the timestamp from string to int
     duration: session.duration,
     punches: session.stats.punches.thrown,
     maxStrength: session.stats.power.max,
+    fullSessionData: session, // also pass all of the session data to make it available to the HistoryEntryScreen on touch
   }));
 
-  console.log('display', displayData);
+  // console.log('display', displayData);
 
   return (
     <Card title="SESSION HISTORY" style={styles.card} containerStyle={{ height: '50%' }}>

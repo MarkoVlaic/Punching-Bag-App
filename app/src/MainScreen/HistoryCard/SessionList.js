@@ -24,10 +24,10 @@ const ListEmpty = () => (
 );
 
 const SessionList = ({ data, loading, loadNextPage, noMoreData }) => {
-  console.log(data.length);
+  // console.log(data.length);
   const renderItem = ({ item }) => {
-    const { timestamp, duration, punches, maxStrength } = item;
-    return <SessionListItem timestamp={timestamp} duration={duration} punches={punches} maxStrength={maxStrength} />;
+    const { timestamp, duration, punches, maxStrength, fullSessionData } = item;
+    return <SessionListItem timestamp={timestamp} duration={duration} punches={punches} maxStrength={maxStrength} fullSessionData={fullSessionData} />;
   };
 
   return (

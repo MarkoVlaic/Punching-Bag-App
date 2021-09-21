@@ -8,8 +8,8 @@ import {
   VictoryZoomContainer,
 } from 'victory-native';
 
-import { colorPrimary, colorGreyMedium, colorWhite } from '../shared/constants';
-import { wp } from '../shared/responsiveLayout';
+import { colorPrimary, colorGreyMedium, colorWhite } from '../constants';
+import { wp } from '../responsiveLayout';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const axisStyle = {

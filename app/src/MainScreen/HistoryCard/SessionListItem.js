@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import LabeledStat from '../../shared/LabeledStat';
 import { colorGreyDark, colorPrimary, colorWhite } from '../../shared/constants';
@@ -50,11 +51,16 @@ const DateDisplay = ({ timestamp }) => {
   );
 };
 
-const SessionListItem = ({ timestamp, duration, punches, maxStrength }) => {
+const SessionListItem = ({ timestamp, duration, punches, maxStrength, fullSessionData }) => {
+  const navigation = useNavigation();
   const formattedDuration = `${Math.round(duration / (1000 * 60))} min`;
 
+  const onPress = () => {
+    navigation.navigate('HistoryEntry', fullSessionData);
+  };
+
   return (
-    <TouchableOpacity activeOpacity={0.4} style={styles.container}>
+    <TouchableOpacity activeOpacity={0.4} style={styles.container} onPress={onPress}>
       <DateDisplay timestamp={timestamp} />
       <LabeledStat name="Duration" value={formattedDuration} style={{ marginHorizontal: 1 }} />
       <LabeledStat name="Punches" value={punches} style={{ marginHorizontal: 1 }} />
