@@ -1,20 +1,11 @@
-import React, { useLayoutEffect, useReducer, useEffect, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
 
 import TimeDisplay from '../shared/SessionDisplay/TimeDisplay';
 import EndButton from './EndButton';
 import SessionDisplay from '../shared/SessionDisplay';
-
-import {
-  reducer,
-  initialState,
-  SET_ENDED,
-  ADD_PUNCH,
-  SET_START_TIMESTAMP,
-} from './reducer';
-
-import SessionStore from './SessionStore';
+import DataHandler from './DataHandler';
+import DataAccumulator from './DataAccumulator';
 
 const TickingTimeDisplay = ({ startTimestamp, ended }) => {
   const [time, setTime] = useState(0);
@@ -36,27 +27,12 @@ const TickingTimeDisplay = ({ startTimestamp, ended }) => {
 };
 
 const SessionScreen = ({ navigation }) => {
-  const [sessionState, dispatch] = useReducer(reducer, initialState);
+  const [ended, setEnded] = useState(false);
+  const [startTimestamp] = useState(Date.now());
 
   useLayoutEffect(() => {
-    dispatch({ type: SET_START_TIMESTAMP, payload: Date.now() });
-  }, []);
-
-  // Init the session store
-  const sessionStoreRef = useRef();
-  useLayoutEffect(() => {
-    sessionStoreRef.current = new SessionStore(Date.now());
-  }, []);
-
-  useLayoutEffect(() => {
-    const { ended, startTimestamp } = sessionState;
-
     const onEndPress = () => {
-      dispatch({ type: SET_ENDED, payload: true });
-
-      const duration = Date.now() - startTimestamp;
-      sessionStoreRef.current.setItem('duration', duration);
-      sessionStoreRef.current.write();
+      setEnded(true);
     };
 
     navigation.setOptions({
@@ -72,31 +48,16 @@ const SessionScreen = ({ navigation }) => {
       },
       headerTitle: '',
     });
-  }, [navigation, sessionState]);
+  }, [navigation, ended, startTimestamp]);
 
-  const { ended, punches, startTimestamp, stats } = sessionState;
+  return (
+    <DataHandler startTimestamp={startTimestamp} ended={ended}>
+      <DataAccumulator>
+        <SessionDisplay />
+      </DataAccumulator>
+    </DataHandler>
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const timestamp = Math.floor((Date.now() - startTimestamp) / 1000);
-      const strength = Math.random() * 10;
-      const payload = { timestamp, strength };
-      dispatch({ type: ADD_PUNCH, payload });
-    }, 1000);
-
-    if (ended) clearInterval(interval);
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  });
-
-  useEffect(() => {
-    sessionStoreRef.current.setItem('punches', punches);
-    sessionStoreRef.current.setItem('stats', stats);
-  }, [punches, stats]);
-
-  return <SessionDisplay punches={punches} stats={stats} />;
+  );
 };
 
 export default SessionScreen;
