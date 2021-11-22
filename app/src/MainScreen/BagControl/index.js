@@ -22,7 +22,6 @@ import {
 const styles = StyleSheet.create({
   card: {
     padding: wp(15),
-    
   },
 });
 

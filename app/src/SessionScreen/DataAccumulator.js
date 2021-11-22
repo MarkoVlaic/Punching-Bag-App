@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect,  } from 'react';
+import React, { useReducer, useEffect,} from 'react';
 import { initialState, reducer, ADD_PUNCH } from './reducer';
 
 const DataAccumulator = ({ dataPoints, updateStorageValues, children }) => {
@@ -7,6 +7,7 @@ const DataAccumulator = ({ dataPoints, updateStorageValues, children }) => {
   const recognizePunch = (previousPoints, point) => {
     const { x, y, z } = point;
     const strength = Math.sqrt(x * x + y * y + z * z);
+    if (strength < 1 || strength > 10) return { isPunch: false };
     return { isPunch: true, strength };
   };
 

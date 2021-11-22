@@ -1,8 +1,6 @@
 var bleno = require('bleno');
 const punchingBagService = require('./PunchingBagService');
 
-var serviceUUIDs = ['cdf11c5d62f347389c7c7c7833971d2d'];
-
 console.log('Entered the BLE server') 
 
 bleno.on('stateChange', function(state) {
